@@ -7,6 +7,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -17,11 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.appplanetscomposefinal.models.Planetas
 import com.example.appplanetscomposefinal.ui.theme.AppPlanetsComposeFinalTheme
 
@@ -33,6 +39,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
 
+                    // Lista de planetas
                     val planetas = listOf<Planetas>(
                         Planetas("Mercurio", "Planeta mais proximo do sol", R.drawable.mercurio),
                         Planetas("Venus", "Segundo planeta", R.drawable.venus),
@@ -44,14 +51,56 @@ class MainActivity : ComponentActivity() {
                         Planetas("Netuno", "Planeta ", R.drawable.netuno)
                     )
 
-                    meuCard(planeta = planetas[2])
-                }
+                    // Navegação entre telas
+                    val navController = rememberNavController()
+
+                    NavHost(navController = navController, startDestination = "TelaListagem"){
+                        composable("TelaListagem") {TelaInicial(navController, planetas = planetas)}
+                        composable("TelaDetalhePlaneta"){
+                            val planeta = navController.previousBackStackEntry?.arguments?.getParcelable<Planetas>("planeta")
+                            planeta?.let{
+                                TelaDetalhes(navController, planeta = it)
+                            }
+
+                        }}
+
+                        }
+                    
             }
         }
     }
 
     @Composable
-    fun meuCard(planeta: Planetas) {
+    fun TelaInicial(navController: NavHostController, planetas: List<Planetas>){
+
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(15.dp)
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = "Lista de planetas",
+                style = TextStyle(fontWeight = Bold),
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp
+            )
+
+        }
+
+        LazyColumn(modifier = Modifier
+            .fillMaxHeight()
+            .padding(50.dp)
+            .fillMaxWidth()){
+            itemsIndexed(planetas){
+                _, item -> meuCard(navController, item)
+            }
+        }
+    }
+
+    @Composable
+    fun meuCard(navController: NavHostController,planeta: Planetas) {
 
         // Elevation vai de 0 a 8dp, // shape RoundedCornerShape é borda arredondada
         Card(elevation = 4.dp,
@@ -65,7 +114,10 @@ class MainActivity : ComponentActivity() {
                 .padding(5.dp)
                 .height(120.dp)
                 .clickable {
-
+                    navController.currentBackStackEntry?.arguments = Bundle().apply {
+                        putParcelable("planeta", planeta)
+                    }
+                    navController.navigate("TelaDetalhePlaneta")
                 }
         ) {
 
@@ -74,9 +126,15 @@ class MainActivity : ComponentActivity() {
                     .fillMaxSize()
                     .padding(15.dp)
             ) {
-                Image(painter = painterResource(id = planeta.Imagem), contentDescription = "")
+                Image(
+                    modifier = Modifier
+                        .height(100.dp)
+                        .width(100.dp),
+                    painter = painterResource(id = planeta.Imagem), contentDescription = "")
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(30.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(30.dp),
                     text = planeta.nome,
                     style = TextStyle(fontWeight = Bold),
                     textAlign = TextAlign.Center
