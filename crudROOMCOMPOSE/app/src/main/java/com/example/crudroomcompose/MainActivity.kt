@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.crudroomcompose.Listagem.TelaListagemScreen
 import com.example.crudroomcompose.telacadastro.TelaCadastrarViewModel
 import com.example.crudroomcompose.ui.screen.TelaCadastrarScreen
 import com.example.crudroomcompose.ui.theme.CrudROOMCOMPOSETheme
@@ -48,9 +49,7 @@ private fun TelaInicial(navController: NavHostController) {
 
     Scaffold(
         content = {
-                Column() {
-                    
-                }
+                    TelaListagemScreen(navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
