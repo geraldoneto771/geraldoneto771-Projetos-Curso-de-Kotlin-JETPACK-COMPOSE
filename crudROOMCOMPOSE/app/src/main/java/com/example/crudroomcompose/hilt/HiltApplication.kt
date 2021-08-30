@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.crudroomcompose.data.database.AppDB
-import com.example.crudroomcompose.data.repositories.CidadesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +23,10 @@ object DbModule{
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): AppDB {
 
-        return Room.databaseBuilder(appContext, AppDB::class.java, "bdCursoCompose.db")
+        return Room.databaseBuilder(
+            appContext,
+            AppDB::class.java,
+            "meuBanco.db")
             .fallbackToDestructiveMigration().build()
     }
 
