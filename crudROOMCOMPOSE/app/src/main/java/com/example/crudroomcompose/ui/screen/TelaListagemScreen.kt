@@ -1,5 +1,6 @@
 package com.example.crudroomcompose.Listagem
 
+import android.os.Bundle
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,7 +39,11 @@ fun meuCard(navController: NavController, cidade: Cidades) {
             .fillMaxWidth()
             .height(60.dp)
             .clickable {
-
+                navController.currentBackStackEntry?.arguments =
+                    Bundle().apply {
+                        putParcelable("cidade", cidade)
+                    }
+                navController.navigate("telaExibir")
             }
     ) {
         Column() {

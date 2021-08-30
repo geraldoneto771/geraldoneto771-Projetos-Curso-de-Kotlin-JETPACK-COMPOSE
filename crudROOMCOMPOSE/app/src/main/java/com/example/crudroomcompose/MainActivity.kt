@@ -12,7 +12,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.crudroomcompose.Listagem.TelaListagemScreen
+import com.example.crudroomcompose.data.entities.Cidades
 import com.example.crudroomcompose.ui.screen.TelaCadastrarScreen
+import com.example.crudroomcompose.ui.screen.TelaDetalhesScreen
 import com.example.crudroomcompose.ui.theme.CrudROOMCOMPOSETheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,6 +35,14 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("TelaCasdastrar") {
                             TelaCadastrarScreen(navController = navController)
+                        }
+                        composable("TelaExibir") {
+                            val cidade = navController.previousBackStackEntry?.arguments?.getParcelable<Cidades>("cidade")
+
+                            cidade?.let{
+                                TelaDetalhesScreen(navController = navController, cidades = it)
+                            }
+
                         }
                     }
                 }
