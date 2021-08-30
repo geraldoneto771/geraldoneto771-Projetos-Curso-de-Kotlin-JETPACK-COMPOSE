@@ -1,10 +1,9 @@
-package com.example.crudroomcompose.telacadastro
+package com.example.crudroomcompose.tela
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crudroomcompose.data.entities.Cidades
 import com.example.crudroomcompose.data.repositories.CidadesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

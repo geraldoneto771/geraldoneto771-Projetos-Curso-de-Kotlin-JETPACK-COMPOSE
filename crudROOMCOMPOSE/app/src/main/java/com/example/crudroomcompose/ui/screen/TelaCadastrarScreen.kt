@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.crudroomcompose.telacadastro.TelaCadastrarViewModel
+import com.example.crudroomcompose.tela.TelaCadastrarViewModel
 
 
 @Composable

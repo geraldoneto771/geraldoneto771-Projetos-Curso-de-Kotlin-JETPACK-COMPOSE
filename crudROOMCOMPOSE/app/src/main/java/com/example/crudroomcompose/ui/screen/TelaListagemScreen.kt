@@ -17,33 +17,38 @@ import com.example.crudroomcompose.data.entities.Cidades
 
 
 @Composable
-fun TelaListagemScreen(viewModel: TelaListagemViewModel = hiltViewModel()
-                       ,navController: NavController){
+fun TelaListagemScreen(
+    viewModel: TelaListagemViewModel = hiltViewModel(), navController: NavController
+) {
 
     var cidades = viewModel.cidadesList.observeAsState(listOf())
 
-    LazyColumn(){
-        itemsIndexed(cidades.value){
-            _, item -> meuCard(navController = navController, cidade = item)
+    LazyColumn() {
+        itemsIndexed(cidades.value) { _, item ->
+            meuCard(navController = navController, cidade = item)
         }
     }
 }
 
 @Composable
-fun meuCard(navController: NavController, cidade: Cidades){
+fun meuCard(navController: NavController, cidade: Cidades) {
 
-     Card(elevation = 4.dp,
-     modifier = Modifier
-         .fillMaxWidth()
-         .height(60.dp)
-         .padding(top = 20.dp)
-         .clickable {
+    Card(elevation = 4.dp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .clickable {
 
-         }
-         ) {
-         Text(modifier = Modifier.fillMaxWidth(),
-             text = cidade.nome_cidade.toString(),
-             textAlign = TextAlign.Center)
+            }
+    ) {
+        Column() {
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = cidade.nome_cidade.toString(),
+                textAlign = TextAlign.Center
+            )
+        }
 
-     }
+    }
 }
