@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.exemplocomposeapi.listagem.DigimonListScreen
 import com.example.exemplocomposeapi.ui.theme.ExemploComposeAPITheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,22 +20,9 @@ class MainActivity : ComponentActivity() {
             ExemploComposeAPITheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    DigimonListScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ExemploComposeAPITheme {
-        Greeting("Android")
     }
 }
